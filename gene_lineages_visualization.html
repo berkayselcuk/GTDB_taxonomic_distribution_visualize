@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Gene Presence Lineage Tool</title>
+  <link rel="stylesheet" href="lineage.css">
+  <script src="https://d3js.org/d3.v7.min.js"></script>
+  <script src="lineage.js" defer></script>
+</head>
+<body>
+
+  <header class="controls">
+    <!-- Load Inputs -->
+    <div class="control-group">
+      <label for="geneTsvPath">TSV Path</label>
+      <input type="text" id="geneTsvPath" placeholder="data/genes.tsv">
+      <button id="loadGenes">Load &amp; Draw</button>
+      <button id="selectLocalTSV">Select File…</button>
+    </div>
+    <!-- Lineage Levels -->
+    <fieldset class="control-group lineage-filter">
+      <legend>Lineage Levels</legend>
+      <div id="levelSelector" class="level-checkboxes"></div>
+      <label for="lineageSearch">Search</label>
+      <input type="text" id="lineageSearch" list="lineageOptions" placeholder="phylum/class/...">
+      <datalist id="lineageOptions"></datalist>
+      <button id="searchBtn">Go</button>
+      <button id="resetFilter" class="secondary">Reset</button>
+    </fieldset>
+  
+    <!-- Difference Rugs -->
+    <fieldset class="control-group diff-controls">
+      <legend>Difference Rugs</legend>
+      <label for="diffGene1">Gene 1</label>
+      <select id="diffGene1"></select>
+      <label for="diffGene2">Gene 2</label>
+      <select id="diffGene2"></select>
+      <label class="inline-checkbox">
+        <input type="checkbox" id="useCounts">
+        Use counts
+      </label>
+      <button id="addDiff">Add</button>
+    </fieldset>
+  </header>
+
+  <main class="main-wrapper">
+    <!-- Genes Sidebar -->
+    <aside class="sidebar">
+      <fieldset class="gene-list">
+        <legend>Genes</legend>
+        <div id="geneSelector" class="gene-checkboxes">
+          <!-- gene checkboxes go here -->
+        </div>
+      </fieldset>
+    </aside>
+    
+    <!-- Chart Area -->
+    <section class="content">
+      <div id="mapping-info" style="margin: 10px 0; font-weight: bold;"></div>
+      <svg id="lineageChart" width="1500"></svg>
+    </section>
+  </main>
+
+</body>
+</html>

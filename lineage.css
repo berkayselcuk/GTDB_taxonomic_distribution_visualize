@@ -1,4 +1,3 @@
-/* ─── Variables & Base ───────────────────────────────────────────── */
 :root {
   --font-body: 13px "Segoe UI", Roboto, sans-serif;
   --font-small: 12px;
@@ -7,7 +6,6 @@
   --color-panel: #ffffff;
   --color-text: #333333;
   --color-muted: #666666;
-  --color-primary: #1a73e8;
   --color-border: #dddddd;
   --radius: 4px;
   --spacing: 10px;
@@ -15,6 +13,7 @@
   --shadow-light: 0 1px 3px rgba(0,0,0,0.08);
 }
 
+/* Reset & Base */
 * { box-sizing: border-box; margin: 0; padding: 0; }
 body {
   font: var(--font-body);
@@ -25,7 +24,7 @@ body {
   flex-direction: column;
 }
 
-/* ─── Header Controls ───────────────────────────────────────────── */
+/* Header controls */
 header.controls {
   display: flex;
   flex-wrap: wrap;
@@ -33,9 +32,10 @@ header.controls {
   padding: var(--spacing);
   background: var(--color-panel);
   box-shadow: var(--shadow-light);
+  justify-content: center;
 }
 
-.control-group, fieldset.control-group {
+.control-group {
   display: flex;
   align-items: center;
   gap: var(--spacing-sm);
@@ -45,11 +45,23 @@ header.controls {
   border-radius: var(--radius);
 }
 
+/* apply to both fieldset.control-group and div.control-group */
+fieldset.control-group > legend,
+.control-group > legend {
+  font-size: var(--font-large);
+  font-weight: 600;
+  margin-right: var(--spacing);
+}
+
 .control-group label {
   font-size: var(--font-small);
   color: var(--color-muted);
 }
 
+.control-group label {
+  font-size: var(--font-small);
+  color: var(--color-muted);
+}
 .control-group input[type="text"],
 .control-group select {
   padding: 4px 6px;
@@ -58,7 +70,13 @@ header.controls {
   border-radius: var(--radius);
   width: 120px;
 }
+fieldset.control-group > legend {
+  font-size: var(--font-large);
+  font-weight: 600;
+  margin-right: var(--spacing);
+}
 
+/* Buttons */
 button {
   padding: 4px 8px;
   font-size: var(--font-small);
@@ -67,23 +85,15 @@ button {
   background: #fff;
   cursor: pointer;
 }
-button:hover { background: var(--color-bg); }
+button:hover {
+  background: var(--color-bg);
+}
 button.secondary {
   border-color: var(--color-muted);
   color: var(--color-muted);
 }
 
-/* Fieldset Legends */
-fieldset.control-group {
-  border: none;
-}
-fieldset.control-group > legend {
-  font-size: var(--font-large);
-  font-weight: 600;
-  margin-right: var(--spacing);
-}
-
-/* Lineage level checkboxes */
+/* Lineage‐level checkboxes */
 .level-checkboxes {
   display: flex;
   gap: var(--spacing-sm);
@@ -96,7 +106,7 @@ fieldset.control-group > legend {
   color: var(--color-text);
 }
 
-/* ─── Main Area ─────────────────────────────────────────────────── */
+/* Main layout */
 .main-wrapper {
   flex: 1;
   display: flex;
@@ -111,16 +121,31 @@ fieldset.control-group > legend {
   border-right: 1px solid var(--color-border);
   overflow-y: auto;
 }
+
+/* Gene list panel */
 .gene-list {
   border: 1px solid var(--color-border);
   border-radius: var(--radius);
   padding: var(--spacing-sm);
+  max-height: 40vh;     /* adjust as needed */
+  display: flex;
+  flex-direction: column;
 }
 .gene-list > legend {
   font-size: var(--font-large);
   font-weight: 600;
   margin-bottom: var(--spacing-sm);
 }
+
+
+.gene-list .gene-checkboxes {
+  overflow-y: auto;     /* keep only the checkboxes scrolling */
+}
+.sidebar-header {
+  margin-bottom: var(--spacing-sm);
+}
+
+/* Gene checkboxes */
 .gene-checkboxes {
   display: flex;
   flex-direction: column;
@@ -135,15 +160,17 @@ fieldset.control-group > legend {
   margin-left: 6px;
 }
 
-/* Content / SVG */
+/* Content area */
 .content {
   flex: 1;
   padding: var(--spacing);
   overflow: auto;
 }
-svg { display: block; }
+svg {
+  display: block;
+}
 
-/* Tooltip (if used) */
+/* Tooltip */
 .tooltip {
   position: absolute;
   pointer-events: none;

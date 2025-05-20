@@ -11,12 +11,10 @@
 
   <header class="controls">
     <!-- Load Inputs -->
-    <div class="control-group">
-      <label for="geneTsvPath">TSV Path</label>
-      <input type="text" id="geneTsvPath" placeholder="data/genes.tsv">
-      <button id="loadGenes">Load &amp; Draw</button>
-      <button id="selectLocalTSV">Select File…</button>
-    </div>
+    <fieldset class="control-group">
+      <legend>Load Gene Count TSV</legend>
+      <button id="loadTSV">Load TSV</button>
+    </fieldset>
     <!-- Lineage Levels -->
     <fieldset class="control-group lineage-filter">
       <legend>Lineage Levels</legend>
@@ -47,6 +45,9 @@
     <!-- Genes Sidebar -->
     <aside class="sidebar">
       <fieldset class="gene-list">
+        <div class="sidebar-header">
+          <button id="toggleSelectAll">Select All</button>
+        </div>
         <legend>Genes</legend>
         <div id="geneSelector" class="gene-checkboxes">
           <!-- gene checkboxes go here -->

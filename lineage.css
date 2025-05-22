@@ -183,3 +183,8 @@ svg {
   opacity: 0;
   transition: opacity 0.1s;
 }
+
+
+.normalization-controls select {
+  width: 110px;
+}

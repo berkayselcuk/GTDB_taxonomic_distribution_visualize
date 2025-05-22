@@ -39,19 +39,35 @@
       </label>
       <button id="addDiff">Add</button>
     </fieldset>
+    <!-- Normalisation -->
+    <fieldset class="control-group normalization-controls">
+      <legend>Normalise widths</legend>
+
+      <label for="normalizeLevel">Lineage</label>
+      <select id="normalizeLevel"></select>
+
+      <button id="applyNormalize">Apply</button>
+      <button id="ResetWidth">Reset</button>
+    </fieldset>
   </header>
 
   <main class="main-wrapper">
     <!-- Genes Sidebar -->
     <aside class="sidebar">
-      <fieldset class="gene-list">
-        <div class="sidebar-header">
+      <div class="sidebar-header">
           <button id="toggleSelectAll">Select All</button>
-        </div>
+      </div>
+      <fieldset class="gene-list">
         <legend>Genes</legend>
         <div id="geneSelector" class="gene-checkboxes">
           <!-- gene checkboxes go here -->
         </div>
+      </fieldset>
+      <fieldset class="gene-list">
+        <legend>Differences</legend>
+
+        <!-- check‑boxes created by the JS will be injected here -->
+        <div id="diffSelector" class="gene-checkboxes"></div>
       </fieldset>
     </aside>
     

@@ -23,7 +23,7 @@
       <input type="text" id="lineageSearch" list="lineageOptions" placeholder="phylum/class/...">
       <datalist id="lineageOptions"></datalist>
       <button id="searchBtn">Go</button>
-      <button id="resetFilter" class="secondary">Reset</button>
+      <button id="resetFilter">Reset</button>
     </fieldset>
   
     <!-- Difference Rugs -->
@@ -41,7 +41,7 @@
     </fieldset>
     <!-- Normalisation -->
     <fieldset class="control-group normalization-controls">
-      <legend>Normalise Widths</legend>
+      <legend>Normalize Widths</legend>
 
       <label for="normalizeLevel">Lineage</label>
       <select id="normalizeLevel"></select>
@@ -49,6 +49,12 @@
       <button id="applyNormalize">Apply</button>
       <button id="ResetWidth">Reset</button>
     </fieldset>
+    <fieldset class="control-group normalization-controls">
+      <legend>Filter Assemblies</legend>
+      <button id="filterAssemblies">Filter All Zero</button>
+      <button id="resetFilter" >Reset</button>
+    </fieldset>
+    
   </header>
 
   <main class="main-wrapper">
@@ -56,6 +62,7 @@
     <aside class="sidebar">
       <div class="sidebar-header">
           <button id="toggleSelectAll">Select All</button>
+          <button id="togglePresence">Show Absence</button>
       </div>
       <fieldset class="gene-list">
         <legend>Genes</legend>

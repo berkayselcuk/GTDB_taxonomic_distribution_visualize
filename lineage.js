@@ -38,6 +38,7 @@
   let geneNames    = [];     // regular + diff rows
   let matrix       = null;   // flattened  (genes × assemblies)
   let ASM_COUNT    = 0;
+  let showPresence = true;
 
   const countMap  = new Map();   // assembly  -> { gene:count }
   const asmIndex  = new Map();   // assembly  -> idx
@@ -73,6 +74,9 @@
   const geneSel    = d3.select('#geneSelector');   // “Genes”
   const diffSelCt  = d3.select('#diffSelector');   // NEW panel
   const toggleBtn  = d3.select('#toggleSelectAll');
+  const togglePresenceBtn = d3.select('#togglePresence')
+  .text('Show Absence')       // initial label = “next” mode
+  .on('click', togglePresence);
 
   const mapInfo    = d3.select('#mapping-info');
   const searchInp  = d3.select('#lineageSearch');
@@ -87,7 +91,25 @@
   const normSel    = d3.select('#normalizeLevel');
   const normBtn    = d3.select('#applyNormalize');
   const resetWidthBTN = d3.select('#ResetWidth');
+  const filterAssembliesBtn = d3.select('#filterAssemblies');
+  
 
+
+
+    /**
+   * Flip every bit in `matrix` (1→0, 0→1),
+   * redraw all rugs, and flip the button label.
+   */
+  function togglePresence() {
+    for (let i = 0, L = matrix.length; i < L; i++) {
+      matrix[i] = matrix[i] ? 0 : 1;
+    }
+    updateRugs();
+    const txt = togglePresenceBtn.text();
+    togglePresenceBtn.text(
+      txt === 'Show Absence' ? 'Show Presence' : 'Show Absence'
+    );
+  }
   /* ────────────────────────────────────────────────────────
      UTILS
      ------------------------------------------------------- */
@@ -175,10 +197,19 @@
      DATA‑MAPPING banner
      ------------------------------------------------------- */
   function updateMappingBanner() {
-    const matched = countMap.size;
-    const pct = totalInput? ((matched/totalInput)*100).toFixed(1):'0.0';
-    mapInfo.text(`Mapped ${matched} of ${totalInput} input assemblies (${pct}%)`);
-  }
+  const matched    = countMap.size;
+  const pctInput   = totalInput
+                     ? ((matched / totalInput) * 100).toFixed(1)
+                     : '0.0';
+  const pctGTDB    = ASM_COUNT
+                     ? ((matched / ASM_COUNT) * 100).toFixed(1)
+                     : '0.0';
+
+  mapInfo.html(
+    `Mapped ${matched} of ${totalInput} input assemblies (${pctInput}%)<br/>
+     Coverage of GTDB v214: ${matched} of ${ASM_COUNT} assemblies (${pctGTDB}%)`
+  );
+}
 
   /* ────────────────────────────────────────────────────────
      FILTER & REFLOW
@@ -193,6 +224,22 @@
     assemblies = raw.map(d=>d.assembly);
     buildLayout(); drawLineage(); updateRugs();
   }
+
+  function applyAssemblyFilter() {
+  // keep only those assemblies that
+  //  1) were present in the TSV (countMap has an entry)
+  //  2) have at least one gene with count > 0
+  raw = originalRaw.filter(d => {
+    const cm = countMap.get(d.assembly);
+    return cm && Object.values(cm).some(c => c > 0);
+  });
+  assemblies = raw.map(d => d.assembly);
+
+  buildLayout();
+  drawLineage();
+  updateRugs();
+  updateMappingBanner();
+}
 
   /* ────────────────────────────────────────────────────────
      CONTROL BUILDERS
@@ -338,6 +385,7 @@
       normalizeLevel=null; normSel.property('value','');
       buildLayout(); drawLineage(); updateRugs();
     });
+    filterAssembliesBtn.on('click', applyAssemblyFilter);
   }
 
   /* ────────────────────────────────────────────────────────

@@ -54,6 +54,27 @@
       <button id="filterAssemblies">Filter All Zero</button>
       <button id="resetFilter" >Reset</button>
     </fieldset>
+      <!-- Lineage‐size Filter -->
+    <fieldset class="control-group size-filter-controls">
+      <legend>Filter by lineage size</legend>
+
+      <label for="sizeFilterLevel">Level</label>
+      <select id="sizeFilterLevel">
+        <option value="">— choose level —</option>
+        <option value="phylum">phylum</option>
+        <option value="class">class</option>
+        <option value="order">order</option>
+        <option value="family">family</option>
+        <option value="genus">genus</option>
+      </select>
+
+      <label for="sizeFilterThreshold">Min count</label>
+      <input type="number" id="sizeFilterThreshold" min="0" value="0">
+
+      <button id="applySizeFilter">Apply</button>
+      <button id="resetSizeFilter">Reset</button>
+    </fieldset>
+
     
   </header>
 

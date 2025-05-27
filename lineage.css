@@ -62,14 +62,18 @@ fieldset.control-group > legend,
   font-size: var(--font-small);
   color: var(--color-muted);
 }
+
 .control-group input[type="text"],
+.control-group input[type="number"],
 .control-group select {
   padding: 4px 6px;
   font-size: var(--font-body);
   border: 1px solid var(--color-border);
   border-radius: var(--radius);
-  width: 120px;
+  width: 11ch;        /* ≈ 11 characters wide */
+  min-width: 4ch;    /* never shrink below 4ch */
 }
+
 fieldset.control-group > legend {
   font-size: var(--font-large);
   font-weight: 600;
@@ -157,7 +161,7 @@ button.secondary {
   cursor: pointer;
 }
 .gene-checkboxes input {
-  margin-left: 6px;
+  margin-right: 4px;
 }
 
 /* Content area */
@@ -188,3 +192,9 @@ svg {
 .normalization-controls select {
   width: 110px;
 }
+
+label {
+  display: inline-flex;
+  align-items:center;   /* centers checkbox and text vertically */
+}
+

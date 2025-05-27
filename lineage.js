@@ -232,20 +232,35 @@
   /* ────────────────────────────────────────────────────────
      CONTROL BUILDERS
      ------------------------------------------------------- */
-  function buildLevelSelector() {
-    levelSel.html(''); levelSel.append('span').text('Lineage levels: ');
-    levelSel.selectAll('label').data(allLevels).enter().append('label')
-      .text(d=>d).append('input').attr('type','checkbox').attr('value',d=>d)
-      .property('checked',d=>selectedLevels.includes(d))
-      .on('change',()=>{
-        selectedLevels = levelSel.selectAll('input:checked').nodes().map(n=>n.value);
-        if(!selectedLevels.length) {
-          selectedLevels=['phylum'];
-          levelSel.selectAll('input').property('checked',d=>d==='phylum');
-        }
-        drawLineage(); activeGenes.forEach((g,i)=>shiftRugRow(g,i));
-      });
-  }
+     function buildLevelSelector() {
+      levelSel.html('');
+      levelSel.append('span').text('Lineage levels: ');
+    
+      // bind data, create one <label> per level
+      const labels = levelSel.selectAll('label')
+        .data(allLevels)
+        .enter()
+        .append('label');
+    
+      // 1) append checkbox first
+      labels.append('input')
+        .attr('type', 'checkbox')
+        .attr('value', d => d)
+        .property('checked', d => selectedLevels.includes(d))
+        .on('change', () => {
+          selectedLevels = levelSel.selectAll('input:checked').nodes().map(n => n.value);
+          if (!selectedLevels.length) {
+            selectedLevels = ['phylum'];
+            levelSel.selectAll('input').property('checked', d => d === 'phylum');
+          }
+          drawLineage();
+          activeGenes.forEach((g,i) => shiftRugRow(g, i));
+        });
+    
+      // 2) then append the text
+      labels.append('span')
+        .text(d => d);
+    }
 
   function hookCheckboxContainer(sel) {
     sel.on('change',e=>{
@@ -253,12 +268,22 @@
     });
   }
 
-  function buildGeneSelector(){
-    geneSel.html(''); geneNames.forEach(g=>{
-      geneSel.append('label').text(g.replace(/_count$/,''))
-             .append('input').attr('type','checkbox').attr('value',g);
-    }); hookCheckboxContainer(geneSel);
+  function buildGeneSelector() {
+    geneSel.html('');
+    geneNames.forEach(g => {
+      // 1) create a <label> container
+      const lbl = geneSel.append('label');
+      // 2) append the checkbox
+      lbl.append('input')
+         .attr('type', 'checkbox')
+         .attr('value', g);
+      // 3) append the text
+      lbl.append('span')
+         .text(g.replace(/_count$/, ''));
+    });
+    hookCheckboxContainer(geneSel);
   }
+  
   hookCheckboxContainer(diffSelCt);
 
   function buildSearchDatalist() {
